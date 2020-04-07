@@ -1,5 +1,5 @@
 # OrchardRoverFirmWare
-OrchardRover 是一套基于 ROS 编写的果园移动机器人SLAM系统，而本程序是机器人的下位机程序，在STM32F103ZETx系列芯片上运行
+OrchardRover 是一套基于 ROS 编写的果园移动机器人SLAM系统，而 OrchardRoverFirmWare 是机器人的下位机程序，在STM32F103ZETx系列芯片上运行
 
 软件环境
 * IDE : MDK-ARM V5
