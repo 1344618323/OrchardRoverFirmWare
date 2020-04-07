@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "drive_task.h": "c",
+        "orchard_rover_sys.C": "cpp",
+        "usart.h": "c",
+        "read_range_task.h": "c",
+        "stepper_motor_con.h": "c"
+    }
+}

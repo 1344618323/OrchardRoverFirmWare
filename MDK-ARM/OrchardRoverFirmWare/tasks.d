@@ -1,0 +1,16 @@
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+orchardroverfirmware\tasks.o: D:\keil\ARM\ARMCC\Bin\..\include\stdlib.h
+orchardroverfirmware\tasks.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+orchardroverfirmware\tasks.o: D:\keil\ARM\ARMCC\Bin\..\include\stddef.h
+orchardroverfirmware\tasks.o: D:\keil\ARM\ARMCC\Bin\..\include\stdint.h
+orchardroverfirmware\tasks.o: ../Inc/FreeRTOSConfig.h
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+orchardroverfirmware\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/stack_macros.h

@@ -1,0 +1,13 @@
+orchardroverfirmware\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
+orchardroverfirmware\heap_4.o: D:\keil\ARM\ARMCC\Bin\..\include\stdlib.h
+orchardroverfirmware\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+orchardroverfirmware\heap_4.o: D:\keil\ARM\ARMCC\Bin\..\include\stddef.h
+orchardroverfirmware\heap_4.o: D:\keil\ARM\ARMCC\Bin\..\include\stdint.h
+orchardroverfirmware\heap_4.o: ../Inc/FreeRTOSConfig.h
+orchardroverfirmware\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+orchardroverfirmware\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+orchardroverfirmware\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+orchardroverfirmware\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+orchardroverfirmware\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+orchardroverfirmware\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+orchardroverfirmware\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h

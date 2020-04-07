@@ -1,0 +1,15 @@
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
+orchardroverfirmware\event_groups.o: D:\keil\ARM\ARMCC\Bin\..\include\stdlib.h
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+orchardroverfirmware\event_groups.o: D:\keil\ARM\ARMCC\Bin\..\include\stddef.h
+orchardroverfirmware\event_groups.o: D:\keil\ARM\ARMCC\Bin\..\include\stdint.h
+orchardroverfirmware\event_groups.o: ../Inc/FreeRTOSConfig.h
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+orchardroverfirmware\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
