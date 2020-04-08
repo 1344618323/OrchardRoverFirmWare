@@ -1,12 +1,12 @@
 # OrchardRoverFirmWare
-OrchardRover 是一套基于 ROS 编写的果园移动机器人 SLAM 系统 (https://github.com/1344618323/OrchardRover)
+[OrchardRover](https://github.com/1344618323/OrchardRover) 是一套基于 ROS 编写的果园移动机器人 SLAM 系统。
 
-OrchardRoverFirmWare 是机器人的下位机程序，在 STM32F103ZETx 系列芯片上运行。下位机程序主要用于接收上位机或遥控器的指令，控制底盘移动；同时，还需要解算 里程计数据 提供给上位机的 SLAM 算法
+OrchardRoverFirmWare 是机器人的下位机程序，在 STM32F103ZETx 系列芯片上运行。下位机程序主要用于接收上位机或遥控器的指令，控制底盘移动；同时，还需要解算 里程计数据 提供给上位机的 SLAM 算法。
 
 <img src="img/chassis.png" style="zoom:80%;display: inline-block; float:middle"/>
 <center>机器人底盘</center>
 
-机器人左右两边各有一个直流电机和控制器
+机器人左右两边各有一个直流电机和控制器。
 
 
 软件环境
@@ -30,4 +30,4 @@ OrchardRoverFirmWare 是机器人的下位机程序，在 STM32F103ZETx 系列�
     
     帧头 --> pack_len (数据包长度) --> data_id (数据id) --> data_content (传输内容) --> CRC32 冗余校验
 
-3. 直流电机驱动 ：stepper_motor_con.c/h
+3. 直流电机驱动 ：motor_con.c/h
