@@ -37,15 +37,4 @@ orchardroverfirmware\protocol.o: ..\Bsp\bsp_uart.h
 orchardroverfirmware\protocol.o: ../Inc/usart.h
 orchardroverfirmware\protocol.o: ../Inc/main.h
 orchardroverfirmware\protocol.o: ..\Bsp\protocol.h
-orchardroverfirmware\protocol.o: ..\Bsp\ultrasonic.h
-orchardroverfirmware\protocol.o: ..\Bsp\leonard_delay.h
-orchardroverfirmware\protocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/freertos.h
-orchardroverfirmware\protocol.o: ../Inc/FreeRTOSConfig.h
-orchardroverfirmware\protocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
-orchardroverfirmware\protocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
-orchardroverfirmware\protocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
-orchardroverfirmware\protocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
-orchardroverfirmware\protocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-orchardroverfirmware\protocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
-orchardroverfirmware\protocol.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-orchardroverfirmware\protocol.o: ..\Bsp\bsp_uart.h
+orchardroverfirmware\protocol.o: ..\Bsp\gps.h

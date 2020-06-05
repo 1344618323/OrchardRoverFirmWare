@@ -40,15 +40,5 @@ orchardroverfirmware\motor_con.o: ..\Bsp\crc_transmit.h
 orchardroverfirmware\motor_con.o: D:\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 orchardroverfirmware\motor_con.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
 orchardroverfirmware\motor_con.o: ..\Bsp\bsp_uart.h
-orchardroverfirmware\motor_con.o: ..\Bsp\ultrasonic.h
-orchardroverfirmware\motor_con.o: ..\Bsp\leonard_delay.h
-orchardroverfirmware\motor_con.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/freertos.h
-orchardroverfirmware\motor_con.o: ../Inc/FreeRTOSConfig.h
-orchardroverfirmware\motor_con.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
-orchardroverfirmware\motor_con.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
-orchardroverfirmware\motor_con.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
-orchardroverfirmware\motor_con.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
-orchardroverfirmware\motor_con.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-orchardroverfirmware\motor_con.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
-orchardroverfirmware\motor_con.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+orchardroverfirmware\motor_con.o: ..\Bsp\gps.h
 orchardroverfirmware\motor_con.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h

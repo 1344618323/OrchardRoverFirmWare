@@ -4,15 +4,11 @@
 #include"orchard_rover_sys.h"
 #include "usart.h"
 #include "protocol.h"
-#include "ultrasonic.h"
+#include "gps.h"
 
 #define UPPER_SYS_HUART  huart1
 #define UPPER_SYS_UART_RX_MAX_BUFLEN  RX_MAX_SIZE_PC
 #define UPPER_SYS_UART_TX_MAX_BUFLEN  TX_MAX_SIZE_PC
-
-#define OBSERVE_SYS_HUART  huart3
-#define OBSERVE_SYS_UART_RX_MAX_BUFLEN  RX_MAX_SIZE_PC
-#define OBSERVE_SYS_UART_TX_MAX_BUFLEN  TX_MAX_SIZE_PC
 
 #define JY61_HUART  huart2
 #define JY61_UART_RX_MAX_BUFLEN  50
@@ -38,8 +34,5 @@ void JY61_Set_Yaw_Zero(void);
 double Get_Yaw_Angle(void);
 
 void Transmit_Chassis_Msg(double *msg);
-void Transmit_KS109_Cmd(uint8_t cmd, uint8_t id);
-void Transmit_Observe_Msg(uint8_t *msg);
-void Forward_Upper_Msg_To_Observe(uint8_t *msg, uint16_t len);
 
 #endif

@@ -140,19 +140,11 @@ void DataHandle(uint8_t *protocol_packet)
     break;
     case CMD_SET_CAM_ANGLE:
     {
-        if (chassis_mode == 1)
-        {
-            // 转发
-            Forward_Upper_Msg_To_Observe(protocol_packet, p_header->pack_len);
-        }
-        else
-        {
-            cam_angle.valid[0] = *(uint8_t *)(data_addr);
-            cam_angle.valid[1] = *(uint8_t *)(data_addr + 1);
-            cam_angle.angle[0] = *(int16_t *)(data_addr + 2);
-            cam_angle.angle[1] = *(int16_t *)(data_addr + 4);
-            cam_angle.exec_flag = 1;
-        }
+        cam_angle.valid[0] = *(uint8_t *)(data_addr);
+        cam_angle.valid[1] = *(uint8_t *)(data_addr + 1);
+        cam_angle.angle[0] = *(int16_t *)(data_addr + 2);
+        cam_angle.angle[1] = *(int16_t *)(data_addr + 4);
+        cam_angle.exec_flag = 1;
     }
     break;
     default:

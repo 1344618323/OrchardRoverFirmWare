@@ -57,8 +57,6 @@ orchardroverfirmware\main.o: ..\Bsp\crc_transmit.h
 orchardroverfirmware\main.o: D:\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 orchardroverfirmware\main.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
 orchardroverfirmware\main.o: ..\Bsp\bsp_uart.h
-orchardroverfirmware\main.o: ..\Bsp\ultrasonic.h
-orchardroverfirmware\main.o: ..\Bsp\leonard_delay.h
+orchardroverfirmware\main.o: ..\Bsp\gps.h
 orchardroverfirmware\main.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
-orchardroverfirmware\main.o: ..\Bsp\stepper_motor_con.h
-orchardroverfirmware\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+orchardroverfirmware\main.o: ..\Bsp\leonard_delay.h

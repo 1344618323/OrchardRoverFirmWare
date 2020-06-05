@@ -33,7 +33,6 @@
 #include "motor_con.h"
 #include "bsp_uart.h"
 #include "leonard_delay.h"
-#include "stepper_motor_con.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,10 +100,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_TIM2_Init();
   MX_TIM3_Init();
   MX_TIM1_Init();
-  MX_TIM5_Init();
   MX_DAC_Init();
   MX_TIM8_Init();
   MX_USART1_UART_Init();
@@ -118,26 +115,18 @@ int main(void)
   {
     chassis_mode = 0;
   }
-  if (chassis_mode == 1)
-  {
-    HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
-    HAL_TIM_IC_Start_IT(&htim8, TIM_CHANNEL_1);
-    HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0);
-    HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_12B_R, 0);
-    HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
-    HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
-    Sys_Uart_Init();
-    MotorInit();
-  }
-  else
-  {
-    LEONARD_USART2_UART_Init();
-    LEONARD_USART3_UART_Init();
-    LeonardDelayInit(72);
-    HAL_Delay(10);
-    Sys_Uart_Init();
-    StepperMotorInit();
-  }
+
+  HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_IC_Start_IT(&htim8, TIM_CHANNEL_1);
+  HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0);
+  HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_12B_R, 0);
+  HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
+  HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
+  Sys_Uart_Init();
+  MotorInit();
+
+  //用于微秒延时
+  //LeonardDelayInit(72);
 
   // HAL_TIM_Base_Start_IT(&htim6);
 
@@ -202,14 +191,7 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
-  if (chassis_mode == 1)
-  {
     MotorTIMHandler(htim);
-  }
-  else
-  {
-    StepperMotorICTIMHandler(htim);
-  }
 }
 /* USER CODE END 4 */
 

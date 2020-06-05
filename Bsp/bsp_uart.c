@@ -2,14 +2,11 @@
 
 uint8_t upper_sys_uart_rx_buff[UPPER_SYS_UART_RX_MAX_BUFLEN];
 uint8_t upper_sys_uart_tx_buff[UPPER_SYS_UART_TX_MAX_BUFLEN];
-
 uint8_t JY61_uart_buff[JY61_UART_RX_MAX_BUFLEN];
 
-uint8_t observe_sys_uart_rx_buff[OBSERVE_SYS_UART_RX_MAX_BUFLEN];
-uint8_t observe_sys_uart_tx_buff[OBSERVE_SYS_UART_TX_MAX_BUFLEN];
+extern uint8_t gps_uart_tx_buff[GPS_UART_TX_MAX_BUFLEN];
+extern uint8_t gps_uart_rx_buff[GPS_UART_RX_MAX_BUFLEN];
 
-uint8_t KS109_uart_rx_buffs[2][KS109_UART_RX_MAX_BUFLEN];
-uint8_t KS109_uart_tx_buffs[2][KS109_UART_TX_MAX_BUFLEN];
 
 JY61_Data JY61_data;
 
@@ -24,30 +21,19 @@ void JY61_Set_Yaw_Zero(void)
 
 void Sys_Uart_Init(void)
 {
-	if (chassis_mode == 1)
-	{
-		HAL_UART_Receive_DMA(&UPPER_SYS_HUART, upper_sys_uart_rx_buff, UPPER_SYS_UART_RX_MAX_BUFLEN);
-		__HAL_UART_ENABLE_IT(&UPPER_SYS_HUART, UART_IT_IDLE);
 
-		HAL_UART_Receive_DMA(&JY61_HUART, JY61_uart_buff, JY61_UART_RX_MAX_BUFLEN);
-		__HAL_UART_ENABLE_IT(&JY61_HUART, UART_IT_IDLE);
+	HAL_UART_Receive_DMA(&UPPER_SYS_HUART, upper_sys_uart_rx_buff, UPPER_SYS_UART_RX_MAX_BUFLEN);
+	__HAL_UART_ENABLE_IT(&UPPER_SYS_HUART, UART_IT_IDLE);
 
-		HAL_UART_Receive_DMA(&OBSERVE_SYS_HUART, observe_sys_uart_rx_buff, OBSERVE_SYS_UART_RX_MAX_BUFLEN);
-		__HAL_UART_ENABLE_IT(&OBSERVE_SYS_HUART, UART_IT_IDLE);
+	HAL_UART_Receive_DMA(&JY61_HUART, JY61_uart_buff, JY61_UART_RX_MAX_BUFLEN);
+	__HAL_UART_ENABLE_IT(&JY61_HUART, UART_IT_IDLE);
 
-		JY61_Set_Yaw_Zero();
-	}
-	else
-	{
-		HAL_UART_Receive_DMA(&UPPER_SYS_HUART, upper_sys_uart_rx_buff, UPPER_SYS_UART_RX_MAX_BUFLEN);
-		__HAL_UART_ENABLE_IT(&UPPER_SYS_HUART, UART_IT_IDLE);
+	HAL_UART_Receive_DMA(&GPS_HUART, gps_uart_rx_buff, GPS_UART_RX_MAX_BUFLEN);
+	__HAL_UART_ENABLE_IT(&GPS_HUART, UART_IT_IDLE);
 
-		HAL_UART_Receive_DMA(&L_KS109_HUART, KS109_uart_rx_buffs[L_SENSOR_ID], KS109_UART_RX_MAX_BUFLEN);
-		__HAL_UART_ENABLE_IT(&L_KS109_HUART, UART_IT_IDLE);
+	JY61_Set_Yaw_Zero();
 
-		HAL_UART_Receive_DMA(&R_KS109_HUART, KS109_uart_rx_buffs[R_SENSOR_ID], KS109_UART_RX_MAX_BUFLEN);
-		__HAL_UART_ENABLE_IT(&R_KS109_HUART, UART_IT_IDLE);
-	}
+	//GPS_INIT();
 }
 
 void Uart_Rx_Idle_Callback(UART_HandleTypeDef *huart)
@@ -62,50 +48,25 @@ void Uart_Rx_Idle_Callback(UART_HandleTypeDef *huart)
 		uint32_t rx_len;
 		temp = huart->hdmarx->Instance->CNDTR;
 
-		if (chassis_mode == 1)
+		if (huart == &UPPER_SYS_HUART)
 		{
-			if (huart == &UPPER_SYS_HUART)
-			{
-				rx_len = UPPER_SYS_UART_RX_MAX_BUFLEN - temp;
-				Upper_Sys_Uart_Callback_Handle(upper_sys_uart_rx_buff, rx_len);
-				HAL_UART_Receive_DMA(huart, upper_sys_uart_rx_buff, UPPER_SYS_UART_RX_MAX_BUFLEN);
-			}
-			else if (huart == &JY61_HUART)
-			{
-				rx_len = JY61_UART_RX_MAX_BUFLEN - temp;
-				JY61_Uart_Callback_Handle(JY61_uart_buff, rx_len);
-				HAL_UART_Receive_DMA(huart, JY61_uart_buff, JY61_UART_RX_MAX_BUFLEN);
-			}
-			else if (huart == &OBSERVE_SYS_HUART)
-			{
-				rx_len = OBSERVE_SYS_UART_RX_MAX_BUFLEN - temp;
-				//转发给上位机
-				memcpy(upper_sys_uart_tx_buff, observe_sys_uart_rx_buff, rx_len);
-				HAL_UART_Transmit_DMA(&UPPER_SYS_HUART, upper_sys_uart_tx_buff, rx_len);
-				HAL_UART_Receive_DMA(huart, observe_sys_uart_rx_buff, OBSERVE_SYS_UART_RX_MAX_BUFLEN);
-			}
+			rx_len = UPPER_SYS_UART_RX_MAX_BUFLEN - temp;
+			Upper_Sys_Uart_Callback_Handle(upper_sys_uart_rx_buff, rx_len);
+			HAL_UART_Receive_DMA(huart, upper_sys_uart_rx_buff, UPPER_SYS_UART_RX_MAX_BUFLEN);
 		}
-		else
+		else if (huart == &JY61_HUART)
 		{
-			if (huart == &UPPER_SYS_HUART)
-			{
-				rx_len = UPPER_SYS_UART_RX_MAX_BUFLEN - temp;
-				Upper_Sys_Uart_Callback_Handle(upper_sys_uart_rx_buff, rx_len);
-				HAL_UART_Receive_DMA(huart, upper_sys_uart_rx_buff, UPPER_SYS_UART_RX_MAX_BUFLEN);
-			}
-			else if (huart == &L_KS109_HUART)
-			{
-				rx_len = KS109_UART_RX_MAX_BUFLEN - temp;
-				KS109_Uart_Callback_Handle(KS109_uart_rx_buffs[L_SENSOR_ID], rx_len, L_SENSOR_ID);
-				HAL_UART_Receive_DMA(huart, KS109_uart_rx_buffs[L_SENSOR_ID], KS109_UART_RX_MAX_BUFLEN);
-			}
-			else if (huart == &R_KS109_HUART)
-			{
-				rx_len = KS109_UART_RX_MAX_BUFLEN - temp;
-				KS109_Uart_Callback_Handle(KS109_uart_rx_buffs[R_SENSOR_ID], rx_len, R_SENSOR_ID);
-				HAL_UART_Receive_DMA(huart, KS109_uart_rx_buffs[R_SENSOR_ID], KS109_UART_RX_MAX_BUFLEN);
-			}
+			rx_len = JY61_UART_RX_MAX_BUFLEN - temp;
+			JY61_Uart_Callback_Handle(JY61_uart_buff, rx_len);
+			HAL_UART_Receive_DMA(huart, JY61_uart_buff, JY61_UART_RX_MAX_BUFLEN);
 		}
+		else if (huart == &GPS_HUART)
+		{
+			rx_len = GPS_UART_RX_MAX_BUFLEN - temp;
+			GPS_Uart_Callback_Handle(rx_len);
+			HAL_UART_Receive_DMA(huart, gps_uart_rx_buff, GPS_UART_RX_MAX_BUFLEN);
+		}
+
 		__HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
 	}
 }
@@ -171,30 +132,4 @@ void Transmit_Chassis_Msg(double *msg)
 	uint16_t len = ProtocolPack((uint8_t *)(&info), sizeof(cmd_chassis_info), CMD_PUSH_CHASSIS_INFO, upper_sys_uart_tx_buff);
 	if (len > 0)
 		HAL_UART_Transmit_DMA(&UPPER_SYS_HUART, upper_sys_uart_tx_buff, len);
-}
-
-void Transmit_KS109_Cmd(uint8_t cmd, uint8_t id)
-{
-	KS109_uart_tx_buffs[id][0] = cmd;
-	//	if (id == L_SENSOR_ID)
-	//		HAL_UART_Transmit_DMA(&L_KS109_HUART, KS109_uart_tx_buffs[L_SENSOR_ID], 1);
-	//	else if (id == R_SENSOR_ID)
-	//		HAL_UART_Transmit_DMA(&R_KS109_HUART, KS109_uart_tx_buffs[R_SENSOR_ID], 1);
-	if (id == L_SENSOR_ID)
-		HAL_UART_Transmit(&L_KS109_HUART, KS109_uart_tx_buffs[L_SENSOR_ID], 1, 1);
-	else if (id == R_SENSOR_ID)
-		HAL_UART_Transmit(&R_KS109_HUART, KS109_uart_tx_buffs[R_SENSOR_ID], 1, 1);
-}
-
-void Transmit_Observe_Msg(uint8_t *msg)
-{
-	uint16_t len = ProtocolPack((uint8_t *)(msg), sizeof(cmd_observe_info), CMD_PUSH_OBSERVE_INFO, upper_sys_uart_tx_buff);
-	if (len > 0)
-		HAL_UART_Transmit_DMA(&UPPER_SYS_HUART, upper_sys_uart_tx_buff, len);
-}
-
-void Forward_Upper_Msg_To_Observe(uint8_t *msg, uint16_t len)
-{
-	memcpy(observe_sys_uart_tx_buff, msg, len);
-	HAL_UART_Transmit_DMA(&OBSERVE_SYS_HUART, observe_sys_uart_tx_buff, len);
 }

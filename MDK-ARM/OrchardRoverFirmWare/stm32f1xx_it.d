@@ -47,5 +47,4 @@ orchardroverfirmware\stm32f1xx_it.o: ..\Bsp\crc_transmit.h
 orchardroverfirmware\stm32f1xx_it.o: D:\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 orchardroverfirmware\stm32f1xx_it.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
 orchardroverfirmware\stm32f1xx_it.o: ..\Bsp\bsp_uart.h
-orchardroverfirmware\stm32f1xx_it.o: ..\Bsp\ultrasonic.h
-orchardroverfirmware\stm32f1xx_it.o: ..\Bsp\leonard_delay.h
+orchardroverfirmware\stm32f1xx_it.o: ..\Bsp\gps.h

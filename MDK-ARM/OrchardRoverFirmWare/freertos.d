@@ -56,15 +56,9 @@ orchardroverfirmware\freertos.o: ..\Bsp\crc_transmit.h
 orchardroverfirmware\freertos.o: D:\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 orchardroverfirmware\freertos.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
 orchardroverfirmware\freertos.o: ..\Bsp\bsp_uart.h
-orchardroverfirmware\freertos.o: ..\Bsp\ultrasonic.h
-orchardroverfirmware\freertos.o: ..\Bsp\leonard_delay.h
+orchardroverfirmware\freertos.o: ..\Bsp\gps.h
 orchardroverfirmware\freertos.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
 orchardroverfirmware\freertos.o: ..\App\remote_receive_task.h
 orchardroverfirmware\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 orchardroverfirmware\freertos.o: ..\App\encoder_task.h
-orchardroverfirmware\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
-orchardroverfirmware\freertos.o: ..\App\read_range_task.h
-orchardroverfirmware\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
-orchardroverfirmware\freertos.o: ..\Bsp\stepper_motor_con.h
-orchardroverfirmware\freertos.o: ../Inc/tim.h
 orchardroverfirmware\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

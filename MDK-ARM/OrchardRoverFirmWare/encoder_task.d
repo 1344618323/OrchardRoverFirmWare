@@ -55,6 +55,5 @@ orchardroverfirmware\encoder_task.o: ..\Bsp\crc_transmit.h
 orchardroverfirmware\encoder_task.o: D:\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 orchardroverfirmware\encoder_task.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
 orchardroverfirmware\encoder_task.o: ..\Bsp\bsp_uart.h
-orchardroverfirmware\encoder_task.o: ..\Bsp\ultrasonic.h
-orchardroverfirmware\encoder_task.o: ..\Bsp\leonard_delay.h
+orchardroverfirmware\encoder_task.o: ..\Bsp\gps.h
 orchardroverfirmware\encoder_task.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h

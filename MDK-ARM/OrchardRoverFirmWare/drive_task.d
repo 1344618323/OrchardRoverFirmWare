@@ -55,8 +55,7 @@ orchardroverfirmware\drive_task.o: ..\Bsp\crc_transmit.h
 orchardroverfirmware\drive_task.o: D:\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 orchardroverfirmware\drive_task.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
 orchardroverfirmware\drive_task.o: ..\Bsp\bsp_uart.h
-orchardroverfirmware\drive_task.o: ..\Bsp\ultrasonic.h
-orchardroverfirmware\drive_task.o: ..\Bsp\leonard_delay.h
+orchardroverfirmware\drive_task.o: ..\Bsp\gps.h
 orchardroverfirmware\drive_task.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
 orchardroverfirmware\drive_task.o: ..\App\remote_receive_task.h
 orchardroverfirmware\drive_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

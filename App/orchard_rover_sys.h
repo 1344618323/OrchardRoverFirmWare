@@ -17,8 +17,4 @@
 
 extern uint8_t chassis_mode; 
 
-#define L_SENSOR_ID 0
-#define R_SENSOR_ID 1
-
-
 #endif

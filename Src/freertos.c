@@ -26,11 +26,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */     
-#include "orchard_rover_sys.h" 
+#include "orchard_rover_sys.h"
 #include "drive_task.h"
 #include "encoder_task.h"
 #include "remote_receive_task.h"
-#include "read_range_task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,20 +98,15 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  if(chassis_mode==1){
-    osThreadDef(EncoderTask, Encoder_Task, osPriorityHigh, 0, 128);
-    EncoderTaskHandle = osThreadCreate(osThread(EncoderTask), NULL);
-    
-    osThreadDef(DriveTask, Drive_Task, osPriorityAboveNormal, 0, 128);
-    DriveTaskHandle = osThreadCreate(osThread(DriveTask), NULL);
-    
-    osThreadDef(RemoteReceiveTask, Remote_Receive_Task, osPriorityNormal, 0, 64);
-    RemoteReceiveTaskHandle = osThreadCreate(osThread(RemoteReceiveTask), NULL);
-  }
-  else{
-    osThreadDef(readRangeTask, Read_Range_Task, osPriorityNormal, 0, 128);
-    ReadRangeTaskHandle = osThreadCreate(osThread(readRangeTask), NULL);
-  }
+  osThreadDef(EncoderTask, Encoder_Task, osPriorityHigh, 0, 128);
+  EncoderTaskHandle = osThreadCreate(osThread(EncoderTask), NULL);
+
+  osThreadDef(DriveTask, Drive_Task, osPriorityAboveNormal, 0, 128);
+  DriveTaskHandle = osThreadCreate(osThread(DriveTask), NULL);
+
+  osThreadDef(RemoteReceiveTask, Remote_Receive_Task, osPriorityNormal, 0, 64);
+  RemoteReceiveTaskHandle = osThreadCreate(osThread(RemoteReceiveTask), NULL);
+
   /* USER CODE END RTOS_THREADS */
 
 }
