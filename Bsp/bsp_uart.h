@@ -34,5 +34,5 @@ void JY61_Set_Yaw_Zero(void);
 double Get_Yaw_Angle(void);
 
 void Transmit_Chassis_Msg(double *msg);
-
+void Transmit_Gps_Msg(void);
 #endif

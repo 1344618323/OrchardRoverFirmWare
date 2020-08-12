@@ -15,6 +15,6 @@
 
 #define MyAbs(x) ((x > 0) ? (x) : (-x))
 
-extern uint8_t chassis_mode; 
+extern uint8_t gps_used; 
 
 #endif

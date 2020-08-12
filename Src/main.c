@@ -68,6 +68,7 @@ void MX_FREERTOS_Init(void);
 int cxn = 0;
 int cxn2 = 0;
 uint8_t tempStr[4];
+int ccc=0;
 /* USER CODE END 0 */
 
 /**
@@ -113,7 +114,7 @@ int main(void)
   HAL_Delay(10);
   if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13) == GPIO_PIN_SET)
   {
-    chassis_mode = 0;
+    gps_used = 1;
   }
 
   HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
@@ -147,7 +148,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+	}
   /* USER CODE END 3 */
 }
 

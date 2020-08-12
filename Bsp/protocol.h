@@ -20,7 +20,7 @@
 #define CMD_PUSH_CHASSIS_INFO (0X01u)
 #define CMD_SET_CHASSIS_SPEED (0X03u)
 #define CMD_SET_CAM_ANGLE (0x05u)
-#define CMD_PUSH_OBSERVE_INFO (0X07u)
+#define CMD_PUSH_GPS_INFO (0X07u)
 
 typedef enum
 {
@@ -57,19 +57,14 @@ typedef struct
         int16_t vw;
 } cmd_chassis_speed;
 
-typedef struct
-{
-        uint8_t valid[2];  //下位机到转角命令后是否测量，1不测量，2测量，0无效数据包
-        int16_t angle[2];  //上位机控制转角
-        uint8_t exec_flag; //只有下位机有这个标志位
-} cmd_cam_angle;
-
-typedef struct
-{
-        uint8_t valid[2];   //0无效包，1返回角度包，2返回测距包
-        int16_t bearing[2]; //当前转角
-        int16_t range[2];   //当前测量距离
-} cmd_observe_info;
+typedef struct  
+{										    
+ 	int32_t latitude;				//纬度 分扩大100000倍,实际要除以100000（我改成了1000000）
+	int32_t longitude;			    //经度 分扩大100000倍,实际要除以100000（我改成了1000000）
+	int16_t altitude;			 	//海拔高度,放大了10倍,实际除以10.单位:0.1m	 
+	uint8_t fixmode;					//定位类型:0,没有定位; 1,有定位
+	uint16_t pdop;					//位置精度因子 0~500,对应实际值0~50.0
+}cmd_gps_info;
 
 #pragma pack(pop)
 
@@ -81,7 +76,5 @@ void ProtocolFillPack(uint8_t *topack_data,
 void ReceiveHandle(uint8_t *rx_buf, uint16_t read_len);
 
 void DataHandle(uint8_t *protocol_packet);
-
-extern cmd_cam_angle cam_angle;
 
 #endif

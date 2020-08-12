@@ -1,4 +1,5 @@
 {
+    "C_Cpp.clang_format_style": "{ BasedOnStyle: Chromium, IndentWidth: 4}",
     "files.associations": {
         "drive_task.h": "c",
         "orchard_rover_sys.C": "cpp",

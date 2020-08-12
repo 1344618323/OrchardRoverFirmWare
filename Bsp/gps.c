@@ -11,33 +11,38 @@ uint8_t gps_init = 0;
 uint8_t ack_flag = 0;
 uint16_t ack_len = 0;
 
-void GPS_Uart_Callback_Handle(uint32_t len)
+nmea_msg gpsx;
+
+void GPS_Uart_Callback_Handle(uint32_t len, uint8_t *send_flag)
 {
 	if (gps_init == 0)
 	{
 		ack_len = len;
 		ack_flag = 1;
 	}
-	else{
-
+	else
+	{
+		memcpy(gps_uart_tx_buff, gps_uart_rx_buff, len);
+		GPS_Analysis(&gpsx, (uint8_t *)gps_uart_tx_buff, send_flag); //分析字符串
 	}
 }
 
-void GPS_INIT()
+void GPS_INIT(void)
 {
 	if (SkyTra_Cfg_Rate(5) != 0) //设置定位信息更新速度为5Hz,顺便判断GPS模块是否在位.
 	{
+		uint8_t key = 0xFF;
 		do
 		{
-			usart3_init(9600);						   //初始化串口3波特率为9600
+			LEONARD_USART3_UART_Init(9600);			   //初始化串口3波特率为9600
 			SkyTra_Cfg_Prt(3);						   //重新设置模块的波特率为38400
-			usart3_init(38400);						   //初始化串口3波特率为38400
+			LEONARD_USART3_UART_Init(38400);		   //初始化串口3波特率为38400
 			key = SkyTra_Cfg_Tp(100000);			   //脉冲宽度为100ms
 		} while (SkyTra_Cfg_Rate(5) != 0 && key != 0); //配置SkyTraF8-BD的更新速率为5Hz
-		gps_init = true;
-		osDelay(500);
+		gps_init = 1;
+		HAL_Delay(500);
 	}
-	gps_init = true;
+	gps_init = 1;
 }
 
 const uint32_t BAUD_id[9] = {4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600}; //模块支持波特率数组
@@ -260,7 +265,7 @@ void NMEA_GNGSA_Analysis(nmea_msg *gpsx, uint8_t *buf)
 //分析GNRMC信息
 //gpsx:nmea信息结构体
 //buf:接收到的GPS数据缓冲区首地址
-void NMEA_GNRMC_Analysis(nmea_msg *gpsx, uint8_t *buf)
+void NMEA_GNRMC_Analysis(nmea_msg *gpsx, uint8_t *buf, uint8_t *send_flag)
 {
 	uint8_t *p1, dx;
 	uint8_t posx;
@@ -293,6 +298,8 @@ void NMEA_GNRMC_Analysis(nmea_msg *gpsx, uint8_t *buf)
 		gpsx->longitude = temp / NMEA_Pow(10, dx + 2);											//得到°
 		rs = temp % NMEA_Pow(10, dx + 2);														//得到'
 		gpsx->longitude = gpsx->longitude * NMEA_Pow(10, 6) + (rs * NMEA_Pow(10, 6 - dx)) / 60; //转换为°
+
+		*send_flag = 1;
 	}
 	posx = NMEA_Comma_Pos(p1, 6); //东经还是西经
 	if (posx != 0XFF)
@@ -325,14 +332,14 @@ void NMEA_GNVTG_Analysis(nmea_msg *gpsx, uint8_t *buf)
 //提取NMEA-0183信息
 //gpsx:nmea信息结构体
 //buf:接收到的GPS数据缓冲区首地址
-void GPS_Analysis(nmea_msg *gpsx, uint8_t *buf)
+void GPS_Analysis(nmea_msg *gpsx, uint8_t *buf, uint8_t *send_flag)
 {
-	NMEA_GPGSV_Analysis(gpsx, buf); //GPGSV解析
-	NMEA_BDGSV_Analysis(gpsx, buf); //BDGSV解析
-	NMEA_GNGGA_Analysis(gpsx, buf); //GNGGA解析
-	NMEA_GNGSA_Analysis(gpsx, buf); //GPNSA解析
-	NMEA_GNRMC_Analysis(gpsx, buf); //GPNMC解析
-	NMEA_GNVTG_Analysis(gpsx, buf); //GPNTG解析
+	//NMEA_GPGSV_Analysis(gpsx, buf); //GPGSV解析
+	//NMEA_BDGSV_Analysis(gpsx, buf); //BDGSV解析
+	NMEA_GNGGA_Analysis(gpsx, buf);			   //GNGGA解析
+	NMEA_GNGSA_Analysis(gpsx, buf);			   //GPNSA解析
+	NMEA_GNRMC_Analysis(gpsx, buf, send_flag); //GPNMC解析
+											   //NMEA_GNVTG_Analysis(gpsx, buf); //GPNTG解析
 }
 ///////////////////////////////////////////UBLOX 配置代码/////////////////////////////////////
 ////检查CFG配置执行情况
@@ -347,7 +354,7 @@ uint8_t SkyTra_Cfg_Ack_Check(void)
 	while (ack_flag == 0 && len < 100) //等待接收到应答
 	{
 		len++;
-		osDelay(5);
+		HAL_Delay(5);
 	}
 	if (len < 100) //超时错误.
 	{
@@ -386,8 +393,8 @@ uint8_t SkyTra_Cfg_Prt(uint32_t baud_id)
 	cfg_prt->CS = cfg_prt->id ^ cfg_prt->com_port ^ cfg_prt->Baud_id ^ cfg_prt->Attributes;
 	cfg_prt->end = 0X0A0D;										   //发送结束符(小端模式)
 	SkyTra_Send_Date((uint8_t *)cfg_prt, sizeof(SkyTra_baudrate)); //发送数据给SkyTra
-	osDelay(200);												   //等待发送完成
-	usart3_init(BAUD_id[baud_id]);								   //重新初始化串口3
+	HAL_Delay(200);												   //等待发送完成
+	LEONARD_USART3_UART_Init(BAUD_id[baud_id]);					   //重新初始化串口3
 	return SkyTra_Cfg_Ack_Check();								   //这里不会反回0,因为UBLOX发回来的应答在串口重新初始化的时候已经被丢弃了.
 }
 //配置SkyTra_GPS/北斗模块的时钟脉冲宽度

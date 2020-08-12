@@ -1,7 +1,6 @@
 #include "protocol.h"
 
 cmd_chassis_info test_info;
-cmd_cam_angle cam_angle;
 
 /*************************** 对数据打包 ****************************/
 
@@ -136,15 +135,6 @@ void DataHandle(uint8_t *protocol_packet)
     break;
     case CMD_SET_CHASSIS_SPEED:
     {
-    }
-    break;
-    case CMD_SET_CAM_ANGLE:
-    {
-        cam_angle.valid[0] = *(uint8_t *)(data_addr);
-        cam_angle.valid[1] = *(uint8_t *)(data_addr + 1);
-        cam_angle.angle[0] = *(int16_t *)(data_addr + 2);
-        cam_angle.angle[1] = *(int16_t *)(data_addr + 4);
-        cam_angle.exec_flag = 1;
     }
     break;
     default:

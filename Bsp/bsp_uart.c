@@ -6,7 +6,7 @@ uint8_t JY61_uart_buff[JY61_UART_RX_MAX_BUFLEN];
 
 extern uint8_t gps_uart_tx_buff[GPS_UART_TX_MAX_BUFLEN];
 extern uint8_t gps_uart_rx_buff[GPS_UART_RX_MAX_BUFLEN];
-
+extern nmea_msg gpsx;
 
 JY61_Data JY61_data;
 
@@ -33,7 +33,8 @@ void Sys_Uart_Init(void)
 
 	JY61_Set_Yaw_Zero();
 
-	//GPS_INIT();
+	if (gps_used)
+		GPS_INIT();
 }
 
 void Uart_Rx_Idle_Callback(UART_HandleTypeDef *huart)
@@ -63,7 +64,12 @@ void Uart_Rx_Idle_Callback(UART_HandleTypeDef *huart)
 		else if (huart == &GPS_HUART)
 		{
 			rx_len = GPS_UART_RX_MAX_BUFLEN - temp;
-			GPS_Uart_Callback_Handle(rx_len);
+
+			//对gps数据进行分析，若send_flag在分析过程中被置为1，则将gps数据发送给上位机
+			uint8_t send_flag = 0;
+			GPS_Uart_Callback_Handle(rx_len, &send_flag);
+			if (send_flag == 1 && gpsx.fixmode == 3)
+				Transmit_Gps_Msg();
 			HAL_UART_Receive_DMA(huart, gps_uart_rx_buff, GPS_UART_RX_MAX_BUFLEN);
 		}
 
@@ -130,6 +136,33 @@ void Transmit_Chassis_Msg(double *msg)
 	info.position_y_mm = msg[1];
 	info.gyro_angle = msg[2] * 10;
 	uint16_t len = ProtocolPack((uint8_t *)(&info), sizeof(cmd_chassis_info), CMD_PUSH_CHASSIS_INFO, upper_sys_uart_tx_buff);
+	if (len > 0)
+		HAL_UART_Transmit_DMA(&UPPER_SYS_HUART, upper_sys_uart_tx_buff, len);
+}
+
+void Transmit_Gps_Msg(void)
+{
+	cmd_gps_info info;
+
+	if (gpsx.fixmode == 3)
+		info.fixmode = 1;
+	else
+		info.fixmode = 0;
+
+	if (gpsx.nshemi == 'N')
+		info.latitude = gpsx.latitude;
+	else
+		info.latitude = -gpsx.latitude;
+
+	if (gpsx.ewhemi == 'E')
+		info.longitude = gpsx.longitude;
+	else
+		info.longitude = -gpsx.longitude;
+
+	info.altitude = gpsx.altitude;
+	info.pdop = gpsx.pdop;
+
+	uint16_t len = ProtocolPack((uint8_t *)(&info), sizeof(cmd_gps_info), CMD_PUSH_GPS_INFO, upper_sys_uart_tx_buff);
 	if (len > 0)
 		HAL_UART_Transmit_DMA(&UPPER_SYS_HUART, upper_sys_uart_tx_buff, len);
 }

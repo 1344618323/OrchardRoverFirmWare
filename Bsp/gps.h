@@ -44,9 +44,9 @@ __packed typedef struct
 	nmea_slmsg slmsg[12];		//最多12颗GPS卫星
 	beidou_nmea_slmsg beidou_slmsg[12];		//暂且算最多12颗北斗卫星
 	nmea_utc_time utc;			//UTC时间
-	uint32_t latitude;				//纬度 分扩大100000倍,实际要除以100000
+	uint32_t latitude;				//纬度 分扩大100000倍,实际要除以100000（我改成了1000000）
 	uint8_t nshemi;					//北纬/南纬,N:北纬;S:南纬				  
-	uint32_t longitude;			    //经度 分扩大100000倍,实际要除以100000
+	uint32_t longitude;			    //经度 分扩大100000倍,实际要除以100000（我改成了1000000）
 	uint8_t ewhemi;					//东经/西经,E:东经;W:西经
 	uint8_t gpssta;					//GPS状态:0,未定位;1,非差分定位;2,差分定位;6,正在估算.				  
  	uint8_t posslnum;				//用于定位的GPS卫星数,0~12.
@@ -140,13 +140,13 @@ __packed typedef struct
 
 
 int NMEA_Str2num(uint8_t *buf,uint8_t*dx);
-void GPS_Analysis(nmea_msg *gpsx,uint8_t *buf);
+void GPS_Analysis(nmea_msg *gpsx,uint8_t *buf, uint8_t *send_flag);
 void NMEA_GPGSV_Analysis(nmea_msg *gpsx,uint8_t *buf);
 void NMEA_BDGSV_Analysis(nmea_msg *gpsx,uint8_t *buf);
 void NMEA_GNGGA_Analysis(nmea_msg *gpsx,uint8_t *buf);
 void NMEA_GNGSA_Analysis(nmea_msg *gpsx,uint8_t *buf);
 void NMEA_GNGSA_Analysis(nmea_msg *gpsx,uint8_t *buf);
-void NMEA_GNRMC_Analysis(nmea_msg *gpsx,uint8_t *buf);
+void NMEA_GNRMC_Analysis(nmea_msg *gpsx,uint8_t *buf, uint8_t *send_flag);
 void NMEA_GNVTG_Analysis(nmea_msg *gpsx,uint8_t *buf);
 uint8_t SkyTra_Cfg_Cfg_Save(void);
 uint8_t SkyTra_Cfg_Msg(uint8_t msgid,uint8_t uart1set);
@@ -156,7 +156,6 @@ uint8_t SkyTra_Cfg_Rate(uint8_t Frep);
 void SkyTra_Send_Date(uint8_t* dbuf,uint16_t len);
 uint8_t* data_Little_endian(uint8_t* data,uint16_t len);
 
-void GPS_Uart_Callback_Handle(uint32_t len);
-void GPS_INIT();
-
+void GPS_Uart_Callback_Handle(uint32_t len, uint8_t* send_flag);
+void GPS_INIT(void);
 #endif
