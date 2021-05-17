@@ -4,6 +4,7 @@
 #include "crc_transmit.h"
 #include "orchard_rover_sys.h"
 #include "bsp_uart.h"
+#include "motor_con.h"
 
 /*************传输协议*************/
 //  帧头(0xA5) -> pack_len -> data_id -> data_content -> CRC32(总数据包的校验)
@@ -52,9 +53,10 @@ typedef struct
 
 typedef struct
 {
-        int16_t vx;
-        int16_t vy;
-        int16_t vw;
+        // int16_t vx;
+        // int16_t vy;
+        int16_t v;
+        int16_t w;
 } cmd_chassis_speed;
 
 typedef struct  

@@ -15,6 +15,9 @@
 
 #define MyAbs(x) ((x > 0) ? (x) : (-x))
 
+#define MAX_VEL 1.5
+#define MIN_VEL 0.1
+
 extern uint8_t gps_used; 
 
 #endif

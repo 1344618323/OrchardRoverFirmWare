@@ -1,21 +1,17 @@
 #include "drive_task.h"
-
-int velocity;
-int dir[2];
-float scale_factor = 12.0;
-
-int max_velocity = 200;
-
-// 输出模拟电压2400mv对应1m/s的速度, 只要保证 250(255) * scale_factor ~= 2400
-// 即可
 /*
- * 1 启动
- * 2 暂停
- * 3 左转
- * 4 右转
- * 5 倒车
- * 6 前进
+ * 1 切模式
+ * 2 暂停 0,0
+ * 3 左转 重置-0.2 0.2
+ * 4 右转 重置0.2 -0.2
+ * 5 倒车 重置-0.4 -0.4
+ * 6 前进 重置0.4 0.4
+ * 7 加速 *2 <1.5
+ * 8 减速 /2 >0.1
  */
+
+float velocity[2] = {0, 0};
+uint8_t upper_flag = 0;
 
 void Drive_Task(void const* argument) {
     osDelay(100);
@@ -25,55 +21,65 @@ void Drive_Task(void const* argument) {
             switch (cmd) {
                 case 1:
                     // 启动
-                    dir[0] = dir[1] = 1;
+                    upper_flag = !upper_flag;
+                    velocity[0] = 0.0;
+                    velocity[1] = 0.0;
                     break;
                 case 2:
                     // 暂停
-                    dir[0] = dir[1] = 0;
-                    velocity = 0;
+                    velocity[0] = 0.0;
+                    velocity[1] = 0.0;
                     break;
                 case 3:
                     // 左转
-                    dir[0] = -1;
-                    dir[1] = 1;
-                    velocity = 40;
+                    velocity[0] = -0.2;
+                    velocity[1] = 0.2;
                     break;
                 case 4:
                     // 右转
-                    dir[0] = 1;
-                    dir[1] = -1;
-                    velocity = 40;
+                    velocity[0] = 0.2;
+                    velocity[1] = -0.2;
                     break;
                 case 5:
-                    dir[0] = -1;
-                    dir[1] = -1;
-                    velocity = 80;
+                    velocity[0] = -0.4;
+                    velocity[1] = -0.4;
                     break;
                 case 6:
                     // 前进
-                    dir[0] = 1;
-                    dir[1] = 1;
-                    velocity = 80;
-                    break;
-                case 7:
-                    // 加速
-                    velocity *= 2;
-                    if (velocity > max_velocity)
-                        velocity = max_velocity;
+                    velocity[0] = 0.4;
+                    velocity[1] = 0.4;
                     break;
                 case 8:
+                    // 加速
+                    for (int i = 0; i < 2; i++) {
+                        velocity[i] *= 2;
+                        if (velocity[i] > MAX_VEL)
+                            velocity[i] = MAX_VEL;
+                        else if (velocity[i] < -MAX_VEL)
+                            velocity[i] = -MAX_VEL;
+                    }
+                    break;
+                case 7:
                     // 减速
-                    velocity /= 2;
+                    for (int i = 0; i < 2; i++) {
+                        velocity[i] /= 2;
+                        if (velocity[i] < MIN_VEL && velocity[i] > 0)
+                            velocity[i] = MIN_VEL;
+                        else if (velocity[i] > -MIN_VEL && velocity[i] < 0)
+                            velocity[i] = -MIN_VEL;
+                    }
                     break;
                 default:
                     break;
             }
-
-            MotorSetOut(&motorCon[L_MOT_ID],
-                        (int32_t)(dir[0] * velocity * scale_factor));
-            MotorSetOut(&motorCon[R_MOT_ID],
-                        (int32_t)(dir[1] * velocity * scale_factor));
+            if (!upper_flag)
+                CmdExecute(velocity[0], velocity[1]);
         }
+
+        if (upper_flag) {
+            CmdExecute(upper_vel[0], upper_vel[1]);
+        }
+
         osDelay(50);
     }
 }

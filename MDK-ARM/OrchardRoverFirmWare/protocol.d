@@ -38,3 +38,7 @@ orchardroverfirmware\protocol.o: ../Inc/usart.h
 orchardroverfirmware\protocol.o: ../Inc/main.h
 orchardroverfirmware\protocol.o: ..\Bsp\protocol.h
 orchardroverfirmware\protocol.o: ..\Bsp\gps.h
+orchardroverfirmware\protocol.o: ..\Bsp\motor_con.h
+orchardroverfirmware\protocol.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
+orchardroverfirmware\protocol.o: ../Inc/dac.h
+orchardroverfirmware\protocol.o: ..\Bsp\pid.h

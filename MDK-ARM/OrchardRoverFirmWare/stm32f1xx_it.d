@@ -47,4 +47,8 @@ orchardroverfirmware\stm32f1xx_it.o: ..\Bsp\crc_transmit.h
 orchardroverfirmware\stm32f1xx_it.o: D:\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 orchardroverfirmware\stm32f1xx_it.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
 orchardroverfirmware\stm32f1xx_it.o: ..\Bsp\bsp_uart.h
+orchardroverfirmware\stm32f1xx_it.o: ..\Bsp\motor_con.h
+orchardroverfirmware\stm32f1xx_it.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
+orchardroverfirmware\stm32f1xx_it.o: ../Inc/dac.h
+orchardroverfirmware\stm32f1xx_it.o: ..\Bsp\pid.h
 orchardroverfirmware\stm32f1xx_it.o: ..\Bsp\gps.h

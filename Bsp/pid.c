@@ -63,10 +63,6 @@ float pid_calc(pid_t* pid, float get, float set)
 	{
 			pid->pout = pid->p * pid->err[NOW];
 			pid->iout += pid->i * pid->err[NOW];
-		
-		//cxnÌí¼ÓµÄ´úÂë
-		pid->iout=pid->iout<0?0:pid->iout;
-		
 			pid->dout = pid->d * (pid->err[NOW] - pid->err[LAST]);
 			abs_limit(&(pid->iout), pid->IntegralLimit);
 			pid->pos_out = pid->pout + pid->iout + pid->dout;

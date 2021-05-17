@@ -37,4 +37,8 @@ orchardroverfirmware\bsp_uart.o: ..\Bsp\crc_transmit.h
 orchardroverfirmware\bsp_uart.o: D:\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 orchardroverfirmware\bsp_uart.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
 orchardroverfirmware\bsp_uart.o: ..\Bsp\bsp_uart.h
+orchardroverfirmware\bsp_uart.o: ..\Bsp\motor_con.h
+orchardroverfirmware\bsp_uart.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
+orchardroverfirmware\bsp_uart.o: ../Inc/dac.h
+orchardroverfirmware\bsp_uart.o: ..\Bsp\pid.h
 orchardroverfirmware\bsp_uart.o: ..\Bsp\gps.h
